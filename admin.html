@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>가좌태권도 | 관리자</title>
+<title>더승리태권도 | 관리자</title>
 
 <style>
 *{box-sizing:border-box}
@@ -306,8 +306,8 @@ header h1{color:#fff}
 @media(max-width:650px){.home-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.home-grid button{grid-template-columns:1fr;grid-template-rows:36px auto auto;min-height:140px;padding:14px;gap:5px}.home-grid .home-icon-box{grid-column:1;grid-row:1;width:34px;height:34px;border-radius:9px}.home-grid .ui-icon{width:19px;height:19px}.home-grid strong{grid-column:1;grid-row:2;font-size:15px}.home-grid span:not(.home-icon-box){grid-column:1;grid-row:3;font-size:11px}.manage-nav button{padding:9px 11px}}
 
 </style>
-<meta property="og:title" content="가좌태권도 | 관리자">
-<meta property="og:description" content="가좌태권도 출석관리 서비스">
+<meta property="og:title" content="더승리태권도 | 관리자">
+<meta property="og:description" content="더승리태권도 출석관리 서비스">
 <meta property="og:type" content="website">
 </head>
 
@@ -317,7 +317,7 @@ header h1{color:#fff}
 <div class="card login">
 
 <h2>관리자 로그인</h2>
-<p id="adminLoginTitle">가좌태권도 출석관리</p>
+<p id="adminLoginTitle">더승리태권도 출석관리</p>
 
 <input id="password" type="password" inputmode="numeric"
 placeholder="관리자 비밀번호"
@@ -337,7 +337,7 @@ onkeydown="if(event.key==='Enter') login()">
 <header>
 <div class="inner">
 <div>
-<h1 id="adminHeaderTitle">가좌태권도 출석관리</h1>
+<h1 id="adminHeaderTitle">더승리태권도 출석관리</h1>
 <div id="todayLabel" class="today"></div>
 </div>
 <button onclick="logout()">로그아웃</button>
@@ -383,7 +383,7 @@ onkeydown="if(event.key==='Enter') login()">
 <div class="field"><label for="dojoPhoneInput">도장 연락처</label><input id="dojoPhoneInput" type="tel" maxlength="30" placeholder="연락처"></div>
 <div class="field full"><label for="dojoLogoFile">도장 로고 첨부 (선택)</label><div class="logo-actions"><input id="dojoLogoFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><button type="button" onclick="removeDojoLogo()">로고 삭제</button></div><input id="dojoLogoInput" type="hidden"><small class="settings-note">PNG·JPG·WEBP 이미지 선택 가능 · 자동으로 작은 이미지로 최적화됩니다.</small></div>
 </div>
-<div class="settings-preview"><img id="dojoLogoPreview" alt="도장 로고 미리보기" hidden><strong id="dojoNamePreview">가좌태권도</strong></div>
+<div class="settings-preview"><img id="dojoLogoPreview" alt="도장 로고 미리보기" hidden><strong id="dojoNamePreview">더승리태권도</strong></div>
 <button type="button" class="primary" id="dojoSaveBtn" onclick="saveDojoSettings()">도장 설정 저장</button>
 <div id="dojoSettingsMessage" class="message" role="status"></div>
 </section>
@@ -717,8 +717,8 @@ oninput="renderStudents()">
 
 <script>
 
-const SUPABASE_URL="https://fmwyjonioibewiowbaun.supabase.co";
-const SUPABASE_KEY="sb_publishable_alXwN2FL7k1unOSQ3BBJ-Q_4V2qwvFn";
+const SUPABASE_URL="https://stpgukecnluoaklmnbpg.supabase.co";
+const SUPABASE_KEY="sb_publishable_w1JsuiLyT7EcTMz4kZhX6g_gv5RIpCt";
 
 /* 오늘 출석현황 자동 새로고침 간격(초) */
 const AUTO_REFRESH_SECONDS=30;
@@ -1754,7 +1754,7 @@ async function saveAdminSecurityPassword(){
 }
 
 /* 도장 설정: 서버 RPC 조회/저장 */
-const dojoDefaults={dojo_name:"가좌태권도",logo_url:"",primary_color:"#062b5c",text_color:"#17283d",phone:""};
+const dojoDefaults={dojo_name:"더승리태권도",logo_url:"",primary_color:"#062b5c",text_color:"#17283d",phone:""};
 let dojoSettings={...dojoDefaults};
 function safeHex(v,fallback){return /^#[0-9a-fA-F]{6}$/.test(String(v||""))?v:fallback;}
 function showDojoPreview(){
@@ -1872,7 +1872,7 @@ function renderMonthlyAttendance(){
  const data=monthlyViewData();
  if(!data){document.getElementById("monthlyMessage").textContent="연월을 선택하고 조회 버튼을 눌러주세요.";return;}
  const {year,month,days,people,cls}=data;
- const dojo=typeof dojoSettings!=="undefined"&&dojoSettings?.dojo_name?dojoSettings.dojo_name:"가좌태권도";
+ const dojo=typeof dojoSettings!=="undefined"&&dojoSettings?.dojo_name?dojoSettings.dojo_name:"더승리태권도";
  document.getElementById("monthlyPrintHead").textContent=dojo+" · "+year+"년 "+month+"월 출석부"+(cls?" · "+cls:"");
  const row=head.insertRow();
  function th(text,klass){const el=document.createElement("th");el.textContent=text;if(klass)el.className=klass;row.append(el);}

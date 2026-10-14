@@ -1,12 +1,11 @@
 {
-  "name": "용인대 승리태권도 학부모 출석확인",
-  "short_name": "승리태권도",
-  "description": "용인대 승리태권도 출석·귀가 및 사진 확인",
-  "id": "/parent.html",
-  "start_url": "/parent.html",
+  "name": "더승리태권도 출석체크",
+  "short_name": "더승리태권도",
+  "description": "더승리태권도 출석체크",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f3f6fb",
+  "background_color": "#ffffff",
   "theme_color": "#082e61",
   "icons": [
     {
