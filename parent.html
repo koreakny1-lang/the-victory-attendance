@@ -5,6 +5,7 @@
 <section class="card" id="loginBox"><h2>우리 아이 출석확인</h2><p class="muted">자녀의 출석번호 4자리를 입력해 주세요.</p><form id="form"><input aria-label="출석번호 4자리" autocomplete="off" class="input" id="pin" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••" required="" type="password"/><button class="btn" id="submit" type="submit">출석 기록 확인하기</button></form><div class="error" id="error" role="alert"></div><p class="muted">출석번호를 아는 사람은 출석 여부를 조회할 수 있으므로 번호를 다른 사람에게 알려주지 마세요.</p></section>
 <section class="hidden" id="result"><div class="card"><h2 id="studentName">출석 기록</h2><div class="summary"><div class="tile">오늘 출석<strong id="today">-</strong></div><div class="tile">전체 출석<strong id="total">0회</strong></div></div><div class="departure-status hidden" id="departureStatus"></div><button class="logout" id="reset" type="button">다른 자녀 조회하기</button></div>
 <div class="card"><h2>📸 최근 출석 사진</h2><p class="muted">출석번호로 조회한 자녀의 가장 최근 출석 사진 1장만 표시됩니다.</p><div class="error" id="photoError" role="alert"></div><div class="hidden" id="photoArea"><img alt="가장 최근 출석 사진" class="photo" id="latestPhoto" tabindex="0"/><p class="muted">사진을 누르면 크게 볼 수 있습니다. 보안상 사진 링크는 잠시 후 만료됩니다. 다시 보려면 새로고침을 눌러주세요.</p><button class="btn" id="refreshPhoto" type="button">최근 사진 새로고침</button></div><p class="muted hidden" id="noPhoto">저장된 출석 사진이 없습니다.</p></div>
+<div class="card"><h2>🔔 학부모 출석 알림</h2><p class="muted">이 휴대폰에서 출석·귀가 알림을 받으려면 아래 버튼을 눌러주세요.</p><button class="btn" id="enablePush" type="button">이 휴대폰에서 알림 받기</button><div class="error" id="pushMessage" role="status"></div></div>
 <div class="card"><h2>월별 출석 달력</h2><div class="months" id="months"></div><div class="week"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="grid" id="calendar"></div><div class="legend">🟩 출석 완료 · 🏠 귀가 완료 · 파란 테두리는 오늘입니다.</div></div></section><div class="foot">출석 기록은 도장에 저장된 정보를 기준으로 표시됩니다.</div></main>
 <div aria-label="출석 사진 확대" aria-modal="true" class="photo-modal hidden" id="photoModal" role="dialog"><button aria-label="닫기" class="close" id="closeModal" type="button">×</button><img alt="최근 출석 사진 확대" id="largePhoto"/></div>
 <script>
@@ -44,4 +45,56 @@ async function loadParentDojoSettings(){
 }
 loadParentDojoSettings();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadParentDojoSettings()});
+
+// 더승리태권도 웹 푸시 공개키 (비밀키는 서버에만 보관)
+const VAPID_PUBLIC_KEY = 'BK6hLBgu7RB98QO-PR5rUgTWAw6M9Kl48PBo8gn2UVkpDQr9P7f3dQKZheYroAATG_Uk_lUIrsNUl7ttm1L8MNU';
+function vapidToBytes(value) {
+  const padding = '='.repeat((4 - value.length % 4) % 4);
+  const raw = atob((value + padding).replace(/-/g, '+').replace(/_/g, '/'));
+  return Uint8Array.from(raw, ch => ch.charCodeAt(0));
+}
+$('enablePush').addEventListener('click', async () => {
+  const btn = $('enablePush');
+  const message = $('pushMessage');
+  message.textContent = '';
+  if (!activePin) { message.textContent = '먼저 자녀의 출석번호로 조회해 주세요.'; return; }
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+    message.textContent = '이 브라우저에서는 푸시 알림을 지원하지 않습니다.'; return;
+  }
+  btn.disabled = true;
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') throw new Error('휴대폰 또는 브라우저에서 알림 권한을 허용해 주세요.');
+    const registration = await navigator.serviceWorker.register('/sw.js');
+    await navigator.serviceWorker.ready;
+    let subscription = await registration.pushManager.getSubscription();
+    if (subscription && subscription.options?.applicationServerKey) {
+      const oldKey = new Uint8Array(subscription.options.applicationServerKey);
+      const newKey = vapidToBytes(VAPID_PUBLIC_KEY);
+      if (oldKey.length !== newKey.length || oldKey.some((b, i) => b !== newKey[i])) {
+        await subscription.unsubscribe();
+        subscription = null;
+      }
+    }
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true, applicationServerKey: vapidToBytes(VAPID_PUBLIC_KEY)
+      });
+    }
+    // 서버에서 출석번호를 검증하고 기기 구독정보를 등록합니다.
+    const response = await fetch(SUPABASE_URL + '/functions/v1/subscribe-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ input_pin: activePin, subscription: subscription.toJSON() })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.success !== true) throw new Error(data.message || '기기 등록에 실패했습니다.');
+    message.style.color = '#076c35';
+    message.textContent = '이 휴대폰의 출석 알림이 등록되었습니다.';
+    btn.textContent = '알림 등록 완료';
+  } catch (error) {
+    message.style.color = '#c73535';
+    message.textContent = error?.message || '알림 등록에 실패했습니다.';
+  } finally { btn.disabled = false; }
+});
 </script></body></html>
