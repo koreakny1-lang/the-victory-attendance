@@ -1,13 +1,61 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#082e61"><meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="/manifest.json"><link rel="apple-touch-icon" href="/icon-192.png">
-<title>더승리태권도 | 앱 설치 안내</title>
-<meta property="og:type" content="website"><meta property="og:title" content="더승리태권도 | 앱 설치 안내"><meta property="og:description" content="더승리태권도 학부모 출석·귀가 확인 앱 설치 안내"><meta name="description" content="더승리태권도 학부모 출석·귀가 확인 앱 설치 안내">
-<style>*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#172b47;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif}header{background:#082e61;color:#fff;text-align:center;padding:32px 15px}header h1{font-size:23px;margin:0}header p{margin:10px 0 0;color:#d6e4f8;font-size:14px}.wrap{max-width:520px;margin:25px auto;padding:0 16px}.card{background:white;border-radius:18px;padding:24px;box-shadow:0 7px 26px #16365913;margin-bottom:15px}h2{font-size:19px;margin:0 0 14px}.button{display:block;width:100%;border:0;border-radius:12px;padding:16px;background:#095bce;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:17px;cursor:pointer}.secondary{background:#eaf1fb;color:#082e61}.guide{line-height:1.9;font-size:15px}.guide b{color:#0755b8}.note{color:#63748b;font-size:13px;line-height:1.7}.appicon{display:block;width:74px;height:74px;border-radius:18px;margin:0 auto 16px}#installGuide[hidden],#installed[hidden]{display:none}</style></head>
-<body><header><h1 id="dojoTitle">더승리태권도</h1><p>학부모 출석·귀가 확인 앱 설치</p></header>
-<main class="wrap"><section class="card" style="text-align:center"><img class="appicon" src="/icon-192.png" alt="더승리태권도 앱 아이콘"><h2>홈 화면에 앱 추가하기</h2><p class="note">설치 후에는 홈 화면의 V 아이콘을 눌러 바로 출석·귀가를 확인할 수 있습니다.</p>
-<button id="installBtn" class="button" type="button">📲 앱 설치하기</button><p id="installed" hidden class="note">이미 홈 화면에서 실행 중입니다.</p></section>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#082e61">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="더승리 학부모">
+<link rel="manifest" href="/parent-manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>더승리태권도 | 학부모 앱 설치</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="더승리태권도 | 학부모 앱 설치">
+<meta property="og:description" content="자녀 출석·귀가 확인과 사진, 알림을 위한 학부모 앱 설치 안내">
+<meta name="description" content="더승리태권도 학부모 출석·귀가 확인 앱 설치 안내">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#172b47;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+header{background:#082e61;color:#fff;text-align:center;padding:32px 15px}header h1{font-size:23px;margin:0}header p{margin:10px 0 0;color:#d6e4f8;font-size:14px}
+.wrap{max-width:520px;margin:25px auto;padding:0 16px}.card{background:white;border-radius:18px;padding:24px;box-shadow:0 7px 26px #16365913;margin-bottom:15px}
+h2{font-size:19px;margin:0 0 14px}.button{display:block;width:100%;border:0;border-radius:12px;padding:16px;background:#095bce;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:17px;cursor:pointer}
+.secondary{background:#eaf1fb;color:#082e61}.guide{line-height:1.9;font-size:15px}.guide b{color:#0755b8}.note{color:#63748b;font-size:13px;line-height:1.7}
+.appicon{display:block;width:74px;height:74px;border-radius:18px;margin:0 auto 16px}[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><h1>더승리태권도</h1><p>학부모 출석·귀가 확인 앱 설치</p></header>
+<main class="wrap">
+<section class="card" style="text-align:center">
+<img class="appicon" src="/icon-192.png" alt="더승리태권도 학부모 앱 아이콘">
+<h2>학부모 앱 설치하기</h2>
+<p class="note">설치 후에는 홈 화면에서 자녀 출석·귀가 기록과 최근 사진을 확인하고 알림을 신청할 수 있습니다.</p>
+<button id="installBtn" class="button" type="button">📲 학부모 앱 설치하기</button>
+<p id="installed" hidden class="note">현재 앱으로 실행 중입니다. 아래 버튼으로 학부모 출석확인을 열어주세요.</p>
+</section>
 <section class="card" id="installGuide" hidden><h2 id="guideTitle">설치 방법</h2><div class="guide" id="guideText"></div></section>
-<section class="card"><a class="button secondary" href="/parent.html">설치 없이 출석 확인하기 →</a><p class="note">설치하지 않아도 출석·귀가 확인은 가능합니다. 아이폰에서 푸시 알림을 받으려면 홈 화면에 추가한 앱에서 알림을 허용해야 합니다.</p></section></main>
-<script>(()=>{const btn=document.getElementById('installBtn'),guide=document.getElementById('installGuide'),title=document.getElementById('guideTitle'),info=document.getElementById('guideText');let pending=null;const ua=navigator.userAgent,ios=/iPhone|iPad|iPod/i.test(ua),samsung=/SamsungBrowser/i.test(ua),inapp=/KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;if(standalone){btn.hidden=true;document.getElementById('installed').hidden=false;}window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pending=e;});window.addEventListener('appinstalled',()=>{btn.hidden=true;guide.hidden=true;document.getElementById('installed').hidden=false;});function instructions(){guide.hidden=false;if(ios){title.textContent='아이폰 설치 방법';info.innerHTML='<b>① Safari</b>에서 이 페이지를 엽니다.<br><b>② 공유 버튼(□↑)</b>을 누릅니다.<br><b>③ 홈 화면에 추가</b>를 선택합니다.<br><b>④ 추가</b>를 누릅니다.';}else if(inapp){title.textContent='브라우저에서 열어주세요';info.textContent='밴드·카카오톡 내부 브라우저라면 메뉴에서 Chrome 또는 Safari로 열고 다시 설치 버튼을 눌러주세요.';}else if(samsung){title.textContent='갤럭시 설치 방법';info.innerHTML='<b>삼성 인터넷</b> 하단 메뉴(≡) → <b>현재 페이지 추가</b> → <b>홈 화면</b>을 선택하세요.';}else{title.textContent='갤럭시 설치 방법';info.innerHTML='<b>Chrome</b> 메뉴(⋮) → <b>앱 설치</b> 또는 <b>홈 화면에 추가</b>를 선택하세요.';}}btn.addEventListener('click',async()=>{if(pending){const e=pending;pending=null;try{await e.prompt();await e.userChoice;}catch(_){instructions();}return;}instructions();});})();</script></body></html>
+<section class="card"><a class="button secondary" href="/parent.html">설치 없이 출석 확인하기 →</a><p class="note">설치하지 않아도 출석·귀가 확인은 가능합니다. 아이폰에서 푸시 알림을 받으려면 Safari에서 학부모 앱을 홈 화면에 추가한 후 앱 안에서 알림을 허용해야 합니다.</p></section>
+</main>
+<script>
+(()=>{
+const btn=document.getElementById('installBtn'),guide=document.getElementById('installGuide'),title=document.getElementById('guideTitle'),info=document.getElementById('guideText');
+let pending=null;
+const ua=navigator.userAgent,ios=/iPhone|iPad|iPod/i.test(ua),samsung=/SamsungBrowser/i.test(ua),inapp=/KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+if(standalone){btn.hidden=true;document.getElementById('installed').hidden=false;}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pending=e;});
+window.addEventListener('appinstalled',()=>{btn.hidden=true;guide.hidden=true;document.getElementById('installed').hidden=false;});
+function instructions(){
+ guide.hidden=false;
+ if(inapp){title.textContent='외부 브라우저에서 열어주세요';info.textContent='카카오톡·밴드 등 내부 브라우저에서는 설치가 제한될 수 있습니다. 메뉴에서 Safari 또는 Chrome으로 열어 이 주소에서 다시 설치해 주세요.';}
+ else if(ios){title.textContent='아이폰 설치 방법';info.innerHTML='<b>① Safari</b>에서 아래 「설치 없이 출석 확인하기」를 누릅니다.<br><b>② 학부모 출석확인 화면에서 공유 버튼(□↑)</b>을 누릅니다.<br><b>③ 홈 화면에 추가</b>를 선택합니다.<br><b>④ 추가</b>를 누릅니다.<br>설치된 앱을 열어 출석번호를 입력하고 알림을 허용해 주세요.';}
+ else if(samsung){title.textContent='갤럭시 설치 방법';info.innerHTML='<b>① 아래 「설치 없이 출석 확인하기」</b>를 누릅니다.<br><b>② 삼성 인터넷 메뉴(≡)</b> → <b>현재 페이지 추가</b> → <b>홈 화면</b>을 선택합니다.<br><b>③ 홈 화면의 학부모 앱</b>을 실행합니다.';}
+ else{title.textContent='갤럭시 설치 방법';info.innerHTML='<b>① 아래 「설치 없이 출석 확인하기」</b>를 누릅니다.<br><b>② Chrome 메뉴(⋮)</b> → <b>앱 설치</b> 또는 <b>홈 화면에 추가</b>를 선택합니다.<br><b>③ 홈 화면의 학부모 앱</b>을 실행합니다.';}
+}
+btn.addEventListener('click',async()=>{
+ if(pending){const e=pending;pending=null;try{await e.prompt();const choice=await e.userChoice;if(choice?.outcome!=='accepted')instructions();}catch(_){instructions();}return;}
+ instructions();
+});
+})();
+</script>
+</body>
+</html>
